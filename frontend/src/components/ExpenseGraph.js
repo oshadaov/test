@@ -13,9 +13,17 @@ const getCumulativeData = (data) => {
   });
 };
 
-const ExpenseGraph = ({ data }) => {
+// Helper function to calculate remaining budget
+const getRemainingBudgetData = (cumulativeData, totalBudget) => {
+  return cumulativeData.map(expense => totalBudget - expense);
+};
+
+const ExpenseGraph = ({ data, totalBudget = 4000 }) => {
   // Calculate cumulative expenses
   const cumulativeData = getCumulativeData(data);
+  
+  // Calculate remaining budget
+  const remainingBudgetData = getRemainingBudgetData(cumulativeData, totalBudget);
 
   // Prepare the data for the chart
   const chartData = {
@@ -29,6 +37,14 @@ const ExpenseGraph = ({ data }) => {
         borderColor: '#3498db',
         tension: 0.1, // Smooth the line
       },
+      {
+        label: 'Remaining Budget',
+        data: remainingBudgetData, // Remaining budget on y-axis
+        fill: false,
+        backgroundColor: '#e74c3c',
+        borderColor: '#e74c3c',
+        tension: 0.1, // Smooth the line
+      },
     ],
   };
 
@@ -40,7 +56,7 @@ const ExpenseGraph = ({ data }) => {
       },
       title: {
         display: true,
-        text: 'Cumulative Expenses Over Time',
+        text: 'Cumulative Expenses and Remaining Budget',
       },
     },
     scales: {

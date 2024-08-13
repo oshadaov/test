@@ -1,17 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SignUpForm from './components/pages/SignUp';
+import SignInForm from './components/pages/SignIn';
 import Home from './components/pages/Home';
-import ExpenseGraph from './components/ExpenseGraph';
-
-
+import NavBar from './components/NavBar';
 
 function App() {
-  
-
   return (
-    <>
-  
-    <Home/>
-    </> 
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUpForm />} />
+        <Route path="/signin" element={<SignInForm />} />
+      </Routes>
+    </Router>
   );
 }
 

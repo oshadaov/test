@@ -8,7 +8,7 @@ const ExpenseList = ({ expenses, onDeleteExpense, onEditClick }) => {
       <ul>
         {expenses.map((expense) => (
           <li key={expense._id}>
-            {expense.description}     -    Rs {expense.amount} -     {expense.category}
+            {expense.description}     -    Rs {expense.amount} 
             <button onClick={() => onEditClick(expense)}>Edit</button>
             <button onClick={() => onDeleteExpense(expense._id)}>Delete</button>
           </li>

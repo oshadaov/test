@@ -1,67 +1,68 @@
-/* General Styles for Expense List */
-body {
-    font-family: 'Roboto', sans-serif;
-    
-    color: #1e0fc3;
-    margin: 0;
-    padding: 0;
-  }
+
+ body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #656da4b2;
+  color: #1e0fc3;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  color:#5990c7;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #9fffff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color :rgb(30, 0, 255)
+}
+
+li button {
   
-  h2 {
-    color:#5990c7;
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
+  background-color:#2a0b8fb6 ;
+  color: #28ed0a;
+  padding: 10px 45px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
   
-  /* Expense List Styles */
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
   
+}
+
+li button:hover {
+  background-color: #b18eb1;
+}
+
+li span {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
   li {
-    background-color: #AFEEEE;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color :rgb(13, 13, 13)
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
+
   li button {
-    margin-left: 10px;
-    background-color:#4682B4 ;
-    color: #0b3030;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
   }
-  
-  li button:hover {
-    background-color: #c0392b;
-  }
-  
-  li span {
-    font-size: 1.1rem;
-    font-weight: bold;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    li {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    li button {
-      width: 100%;
-      margin-top: 10px;
-    }
-  }
-  
+}

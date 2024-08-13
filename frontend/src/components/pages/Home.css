@@ -1,15 +1,16 @@
-/* Container for the entire Home page */
-.home-container {
+/* Main container */
+.main-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  font-family: 'Arial', sans-serif;
   background-color: #f4f7fc;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Title Styling */
-h2 {
+.main-container h2 {
   text-align: center;
   margin-bottom: 30px;
   color: #2c3e50;
@@ -17,29 +18,44 @@ h2 {
   font-weight: 600;
 }
 
-/* Display ExpenseForm and ExpenseList as block elements */
-.form-list-container {
-  display: block;
-  margin-bottom: 30px;
+/* Home container - Flexbox layout */
+.home-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
-.expense-form,
-.expense-list {
+/* Left and Right Columns */
+.left, .right {
+  flex: 1;
+}
+
+/* Right column adjustments for multiple graphs */
+.right > div {
   margin-bottom: 20px;
 }
 
-/* Flexbox for ExpenseGraph */
-.graph-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+/* Form, List, and Graph containers */
+.expense-form,
+.expense-list,
+.expense-graph,
+.expense-warning,
+.category-bar-graph {
   background-color: #ffffff;
+  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
-/* Ensure that the graph takes full width within its flex container */
-.graph-container canvas {
-  max-width: 100%;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+  }
+
+  .left, .right {
+    flex: none;
+    width: 100%;
+  }
 }

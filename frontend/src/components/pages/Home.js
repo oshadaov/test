@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ExpenseForm from '../ExpenseForm';
 import ExpenseList from '../ExpenseList';
 import ExpenseGraph from '../ExpenseGraph';
+import ExpenseCircleWarning from '../ExpenseCircleWarning';
+import CategoryBarGraph from '../CategoryBarGraph';
 import { getExpenses, addExpense, updateExpense, deleteExpense } from '../../services/expenseService';
-import './Home.css'; // Optional: Add a CSS file for styling
+import './Home.css'; // Add CSS file for styling
 
 const Home = () => {
   const [expenses, setExpenses] = useState([]);
@@ -39,25 +41,27 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
+    <div className="main-container">
       <h2>Expense Tracker</h2>
-      
-      <div className='left'>
-      <ExpenseForm 
-        currentExpense={currentExpense} 
-        onAddExpense={handleAddExpense} 
-        onUpdateExpense={handleUpdateExpense} 
-      />
-      
-      {/* Expense List */}
-      <ExpenseList 
-        expenses={expenses} 
-        onDeleteExpense={handleDeleteExpense} 
-        onEditClick={handleEditClick} 
-      />
-</div>
-      {/* Expense Graph */}
-      <ExpenseGraph data={expenses} />
+      <div className="home-container">
+        <div className="left">
+          <ExpenseForm 
+            currentExpense={currentExpense} 
+            onAddExpense={handleAddExpense} 
+            onUpdateExpense={handleUpdateExpense} 
+          />
+          <ExpenseList 
+            expenses={expenses} 
+            onDeleteExpense={handleDeleteExpense} 
+            onEditClick={handleEditClick} 
+          />
+        </div>
+        <div className="right">
+          <ExpenseGraph data={expenses} />
+          <ExpenseCircleWarning data={expenses} />
+          <CategoryBarGraph data={expenses} />
+        </div>
+      </div>
     </div>
   );
 };

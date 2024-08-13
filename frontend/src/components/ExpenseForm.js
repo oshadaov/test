@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './ExpenseForm.css'
+import './ExpenseForm.css';
+
 const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
-  const [expense, setExpense] = useState({ amount: '', description: '', category: '' });
+  const [expense, setExpense] = useState({ amount: '', description: '', category: 'Food' }); 
 
   useEffect(() => {
     if (currentExpense) {
       setExpense(currentExpense);
     } else {
-      setExpense({ amount: '', description: '', category: '' });
+      setExpense({ amount: '', description: '', category: 'Food' }); 
     }
   }, [currentExpense]);
 
@@ -18,7 +19,6 @@ const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
     });
   };
 
- 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentExpense) {
@@ -26,7 +26,7 @@ const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
     } else {
       onAddExpense(expense);
     }
-    setExpense({ amount: '', description: '', category: '' }); // Clear the form after submission
+    setExpense({ amount: '', description: '', category: 'Food' }); // Reset to default category
   };
 
   return (
@@ -49,14 +49,16 @@ const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
           onChange={handleChange}
           required
         />
-        <input
-          type="text"
+        <select
           name="category"
-          placeholder="Category"
           value={expense.category}
           onChange={handleChange}
           required
-        />
+        >
+          <option value="Food">Food</option>
+          <option value="Drugs">Drugs</option>
+          <option value="Others">Others</option>
+        </select>
         <button type="submit">
           {currentExpense ? 'Update' : 'Add'}
         </button>
