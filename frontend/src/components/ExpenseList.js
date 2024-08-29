@@ -1,5 +1,5 @@
 import React from 'react';
-import './ExpenseList.css'
+import './ExpenseList.css';
 
 const ExpenseList = ({ expenses, onDeleteExpense, onEditClick }) => {
   return (
@@ -8,7 +8,7 @@ const ExpenseList = ({ expenses, onDeleteExpense, onEditClick }) => {
       <ul>
         {expenses.map((expense) => (
           <li key={expense._id}>
-            {expense.description}     -    Rs {expense.amount} 
+            {expense.description} - Rs{expense.amount} - {expense.category}
             <button onClick={() => onEditClick(expense)}>Edit</button>
             <button onClick={() => onDeleteExpense(expense._id)}>Delete</button>
           </li>

@@ -1,0 +1,89 @@
+/* Main container for the overview */
+.overview-container {
+  width: 350px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f4f7fc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+/* Header styling */
+.overview-container h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Progress bar container */
+.progress-bar-container {
+  width: 100%;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 25px;
+  background-color: #3498db;
+  color: white;
+  line-height: 25px;
+  text-align: center;
+  font-weight: bold;
+  transition: width 0.5s ease;
+  border-radius: 5px 0 0 5px;
+}
+
+/* List of expenses */
+.expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Individual expense item */
+.expense-item {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Expense icon */
+.expense-icon {
+  font-size: 1.5rem;
+  margin-right: 15px;
+  color: #3498db;
+}
+
+/* Expense details */
+.expense-details {
+  flex: 1;
+  text-align: left;
+}
+
+/* Category name */
+.expense-category {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Amount spent */
+.expense-amount {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+/* Warning message */
+.warning-message {
+  color: #e74c3c;
+  font-weight: bold;
+  margin-top: 20px;
+}

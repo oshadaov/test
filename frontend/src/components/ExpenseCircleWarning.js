@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import './ExpenseCircleWarning.css';
@@ -6,38 +6,53 @@ import './ExpenseCircleWarning.css';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ExpenseCircleWarning = ({ data, dailyMax = 4000 }) => {
-  // Calculate today's total expenses
-  const dailyTotals = data.reduce((acc, expense) => {
-    const date = expense.date;
-    if (!acc[date]) {
-      acc[date] = 0;
-    }
-    acc[date] += expense.amount;
-    return acc;
-  }, {});
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
-  // Get today's date (assuming data is in 'YYYY-MM-DD' format)
-  const today = new Date().toISOString().split('T')[0];
-  const todayTotal = dailyTotals[today] || 0; // Get the total for today or 0 if none
+  useEffect(() => {
+    // Aggregate today's expenses by category
+    const today = new Date().toISOString().split('T')[0];
+    const categoryTotals = {
+      Food: 0,
+      Drugs: 0,
+      Others: 0,
+    };
 
-  const chartData = {
-    labels: ['Spent', 'Remaining'],
-    datasets: [
-      {
-        label: 'Daily Expenses',
-        data: [todayTotal, Math.max(0, dailyMax - todayTotal)], // Ensure remaining is not negative
-        backgroundColor: [
-          todayTotal > dailyMax ? '#e74c3c' : '#3498db', // Red if exceeded, blue otherwise
-          '#ecf0f1',
-        ],
-        hoverBackgroundColor: [
-          todayTotal > dailyMax ? '#c0392b' : '#2980b9',
-          '#bdc3c7',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+    data.forEach(expense => {
+      if (expense.date === today) {
+        const category = expense.category || 'Others';
+        if (categoryTotals[category] !== undefined) {
+          categoryTotals[category] += expense.amount;
+        } else {
+          categoryTotals['Others'] += expense.amount;
+        }
+      }
+    });
+
+    const categories = Object.keys(categoryTotals);
+    const totals = Object.values(categoryTotals);
+
+    // Define colors for each category
+    const colors = {
+      Food: '#3498db',  // Blue
+      Drugs: '#e74c3c',  // Red
+      Others: '#2ecc71',  // Green
+    };
+
+    setChartData({
+      labels: categories,
+      datasets: [
+        {
+          label: 'Daily Expenses',
+          data: totals,
+          backgroundColor: categories.map(category => colors[category]),
+          hoverBackgroundColor: categories.map(category => colors[category]),
+          borderWidth: 1,
+        },
+      ],
+    });
+  }, [data]);
+
+  const todayTotal = chartData.datasets[0]?.data.reduce((a, b) => a + b, 0) || 0;
 
   const options = {
     responsive: true,
@@ -60,11 +75,14 @@ const ExpenseCircleWarning = ({ data, dailyMax = 4000 }) => {
   return (
     <div className="warning-container">
       <div className="doughnut-chart-container">
-        <Doughnut data={chartData} options={options} />
+        {chartData.labels.length > 0 && <Doughnut data={chartData} options={options} />}
       </div>
+      <p className="summary-message">
+        {`Total Spent Today: Rs${todayTotal} / Rs${dailyMax}`}
+      </p>
       {todayTotal > dailyMax && (
         <p className="warning-message">
-          Warning: You have exceeded the daily limit of ${dailyMax}!
+          Warning: You have exceeded the daily limit of Rs{dailyMax}!
         </p>
       )}
     </div>

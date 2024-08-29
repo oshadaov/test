@@ -4,49 +4,43 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Helper function to calculate cumulative expenses
-const getCumulativeData = (data) => {
+// Simplified function to prepare chart data
+const prepareChartData = (data, totalBudget) => {
   let cumulative = 0;
-  return data.map(expense => {
+  const cumulativeData = [];
+  const remainingBudgetData = [];
+
+  data.forEach(expense => {
     cumulative += expense.amount;
-    return cumulative;
+    cumulativeData.push(cumulative);
+    remainingBudgetData.push(totalBudget - cumulative);
   });
-};
 
-// Helper function to calculate remaining budget
-const getRemainingBudgetData = (cumulativeData, totalBudget) => {
-  return cumulativeData.map(expense => totalBudget - expense);
-};
-
-const ExpenseGraph = ({ data, totalBudget = 4000 }) => {
-  // Calculate cumulative expenses
-  const cumulativeData = getCumulativeData(data);
-  
-  // Calculate remaining budget
-  const remainingBudgetData = getRemainingBudgetData(cumulativeData, totalBudget);
-
-  // Prepare the data for the chart
-  const chartData = {
-    labels: data.map(expense => expense.date), // Dates as labels on x-axis
+  return {
+    labels: data.map(expense => expense.date), // Dates on x-axis
     datasets: [
       {
         label: 'Cumulative Expenses',
-        data: cumulativeData, // Use cumulative data points on y-axis
-        fill: false,
+        data: cumulativeData, // Cumulative expenses data points
         backgroundColor: '#2980b9',
         borderColor: '#3498db',
-        tension: 0.1, // Smooth the line
+        fill: false,
+        tension: 0.1,
       },
       {
         label: 'Remaining Budget',
-        data: remainingBudgetData, // Remaining budget on y-axis
-        fill: false,
+        data: remainingBudgetData, // Remaining budget data points
         backgroundColor: '#e74c3c',
         borderColor: '#e74c3c',
-        tension: 0.1, // Smooth the line
+        fill: false,
+        tension: 0.1,
       },
     ],
   };
+};
+
+const ExpenseGraph = ({ data, totalBudget = 4000 }) => {
+  const chartData = prepareChartData(data, totalBudget);
 
   const options = {
     responsive: true,
@@ -67,7 +61,7 @@ const ExpenseGraph = ({ data, totalBudget = 4000 }) => {
         },
       },
       y: {
-        beginAtZero: true, // Start y-axis at 0
+        beginAtZero: true,
         title: {
           display: true,
           text: 'Amount (Rs)',

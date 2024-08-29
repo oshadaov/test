@@ -2,13 +2,16 @@
  body {
   font-family: 'Roboto', sans-serif;
   background-color: #656da4b2;
-  color: #1e0fc3;
+  color: #72e0ff;
+  
   margin: 0;
   padding: 0;
 }
 
 h2 {
-  color:#5990c7;
+
+  color: #72e0ff;
+
   font-size: 2rem;
   margin-bottom: 20px;
 }

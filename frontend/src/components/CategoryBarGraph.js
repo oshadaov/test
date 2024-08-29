@@ -8,7 +8,7 @@ const CategoryBarGraph = ({ data }) => {
   // Aggregate expenditures by category
   const categoryTotals = {
     Food: 0,
-    Drugs: 0,
+    Entertainment: 0,
     Others: 0,
   };
 
@@ -24,7 +24,7 @@ const CategoryBarGraph = ({ data }) => {
   // Define colors for each category
   const colors = {
     Food: '#3498db',  // Blue
-    Drugs: '#e74c3c',  // Red
+    Entertainment: '#e74c3c',  // Red
     Others: '#2ecc71',  // Green
   };
 

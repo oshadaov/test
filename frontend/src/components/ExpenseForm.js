@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './ExpenseForm.css';
 
 const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
-  const [expense, setExpense] = useState({ amount: '', description: '', category: 'Food' }); 
+  const [expense, setExpense] = useState({ amount: '', description: '', category: 'Food' });
 
   useEffect(() => {
     if (currentExpense) {
       setExpense(currentExpense);
     } else {
-      setExpense({ amount: '', description: '', category: 'Food' }); 
+      setExpense({ amount: '', description: '', category: 'Food' });
     }
   }, [currentExpense]);
 
@@ -26,11 +26,11 @@ const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
     } else {
       onAddExpense(expense);
     }
-    setExpense({ amount: '', description: '', category: 'Food' }); // Reset to default category
+    setExpense({ amount: '', description: '', category: 'Food' });
   };
 
   return (
-    <div>
+    <div className="Formcontainer">
       <h2>{currentExpense ? 'Edit Expense' : 'Add Expense'}</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -56,7 +56,7 @@ const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
           required
         >
           <option value="Food">Food</option>
-          <option value="Drugs">Drugs</option>
+          <option value="Entertainment">Entertainment</option>
           <option value="Others">Others</option>
         </select>
         <button type="submit">

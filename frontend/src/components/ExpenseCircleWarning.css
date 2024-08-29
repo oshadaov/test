@@ -1,29 +1,33 @@
-
+/* Container for the circular warning chart */
 .warning-container {
   width: 300px;
   margin: 20px auto;
   text-align: center;
 }
 
+/* Doughnut chart container */
+.doughnut-chart-container {
+  position: relative;
+  margin-bottom: 20px;
+}
 
-.warning-message {
-  color: #e74c3c; 
+/* Summary message */
+.summary-message {
+  color: #333;
   font-size: 1rem;
-  margin-top: 15px;
+  margin-top: 10px;
   font-weight: bold;
 }
 
-
-.doughnut-chart-container {
-  position: relative;
+/* Styling for the warning message */
+.warning-message {
+  color: #e74c3c; /* Red color for the warning */
+  font-size: 1rem;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
-
-.doughnut-chart-container canvas {
-  max-width: 100%;
-}
-
-
+/* Optional: Add animations to the warning message */
 .warning-message {
   animation: fadeIn 0.5s ease-in-out;
 }
