@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase/config'; // Ensure you import your Firebase auth
 import ExpenseForm from '../ExpenseForm';
 import ExpenseList from '../ExpenseList';
-import ExpenseGraph from '../ExpenseGraph';
-import CategoryBarGraph from '../CategoryBarGraph';
+
 import { getExpenses, addExpense, updateExpense, deleteExpense } from '../../services/expenseService';
 import './Home.css';
 
@@ -84,10 +83,10 @@ const Home = () => {
             onEditClick={handleEditClick} 
           />
         </div>
-        <div className="right">
+        {/* <div className="right">
           <ExpenseGraph data={expenses} totalBudget={4000} />
           <CategoryBarGraph data={expenses} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
