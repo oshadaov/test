@@ -1,10 +1,9 @@
+// src/components/pages/Home.js
 import React, { useState, useEffect } from 'react';
-import { auth } from '../../firebase/config'; // Ensure you import your Firebase auth
+import { auth, db } from '../../firebase/config';
+import { collection, addDoc, updateDoc, deleteDoc, getDocs, query, where, doc } from 'firebase/firestore';
 import ExpenseForm from '../ExpenseForm';
 import ExpenseList from '../ExpenseList';
-
-import { getExpenses, addExpense, updateExpense, deleteExpense } from '../../services/expenseService';
-import './Home.css';
 
 const Home = () => {
   const [expenses, setExpenses] = useState([]);
@@ -12,81 +11,59 @@ const Home = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Listen for changes to the user's authentication state
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setUser(user); // Set the user if logged in
-        loadExpenses(user.uid); // Load expenses specific to this user
+        setUser(user);
+        loadExpenses(user.uid); // Load user's expenses once they are authenticated
       } else {
         setUser(null);
-        setExpenses([]);
+        setExpenses([]); // Reset expenses on logout
       }
     });
-
-    return () => unsubscribe(); // Cleanup the listener on component unmount
+    return () => unsubscribe(); // Cleanup on unmount
   }, []);
 
   const loadExpenses = async (userId) => {
-    try {
-      const response = await getExpenses(userId);
-      setExpenses(response.data);
-    } catch (error) {
-      console.error('Failed to load expenses:', error);
-    }
+    const expensesQuery = query(collection(db, 'expenses'), where('userId', '==', userId));
+    const querySnapshot = await getDocs(expensesQuery);
+    const expensesList = querySnapshot.docs.map((doc) => ({ _id: doc.id, ...doc.data() }));
+    setExpenses(expensesList);
   };
 
   const handleAddExpense = async (expense) => {
-    try {
-      await addExpense({ ...expense, userId: user.uid }); // Add userId to the expense
-      loadExpenses(user.uid);
-    } catch (error) {
-      console.error('Failed to add expense:', error);
-    }
+    await addDoc(collection(db, 'expenses'), { ...expense, userId: user.uid });
+    loadExpenses(user.uid); // Reload the expenses after adding a new one
   };
 
   const handleUpdateExpense = async (id, updatedExpense) => {
-    try {
-      await updateExpense(id, { ...updatedExpense, userId: user.uid }); // Include userId
-      loadExpenses(user.uid);
-      setCurrentExpense(null);
-    } catch (error) {
-      console.error('Failed to update expense:', error);
-    }
+    const expenseDoc = doc(db, 'expenses', id);
+    await updateDoc(expenseDoc, updatedExpense);
+    loadExpenses(user.uid); // Reload the expenses after updating
+    setCurrentExpense(null); // Clear the form
   };
 
   const handleDeleteExpense = async (id) => {
-    try {
-      await deleteExpense(id, user.uid); // Include userId
-      loadExpenses(user.uid);
-    } catch (error) {
-      console.error('Failed to delete expense:', error);
-    }
+    const expenseDoc = doc(db, 'expenses', id);
+    await deleteDoc(expenseDoc);
+    loadExpenses(user.uid); // Reload the expenses after deleting
   };
 
   const handleEditClick = (expense) => {
-    setCurrentExpense(expense);
+    setCurrentExpense(expense); // Set the expense for editing
   };
 
   return (
-    <div className="main-container">
-      <h2>{user ? `${user.displayName}'s ` : ''}Expense Tracker</h2>
-      <div className="home-container">
-        <div className="left">
-          <ExpenseForm 
-            currentExpense={currentExpense} 
-            onAddExpense={handleAddExpense} 
-            onUpdateExpense={handleUpdateExpense} 
-          />
-          <ExpenseList 
-            expenses={expenses} 
-            onDeleteExpense={handleDeleteExpense} 
-            onEditClick={handleEditClick} 
-          />
-        </div>
-        {/* <div className="right">
-          <ExpenseGraph data={expenses} totalBudget={4000} />
-          <CategoryBarGraph data={expenses} />
-        </div> */}
+    <div>
+      <h2>Welcome {user?.email}</h2>
+      <div className="left">
+        <ExpenseForm
+          currentExpense={currentExpense}
+          onAddExpense={handleAddExpense}
+          onUpdateExpense={handleUpdateExpense}
+        />
+      </div>
+      <div className="right">
+        <ExpenseList expenses={expenses} onDeleteExpense={handleDeleteExpense} onEditClick={handleEditClick} />
       </div>
     </div>
   );

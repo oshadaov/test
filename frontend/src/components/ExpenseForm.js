@@ -1,3 +1,4 @@
+// src/components/ExpenseForm.js
 import React, { useState, useEffect } from 'react';
 import './ExpenseForm.css';
 
@@ -6,27 +7,27 @@ const ExpenseForm = ({ currentExpense, onAddExpense, onUpdateExpense }) => {
 
   useEffect(() => {
     if (currentExpense) {
-      setExpense(currentExpense);
+      setExpense(currentExpense); // Populate the form with the selected expense to edit
     } else {
-      setExpense({ amount: '', description: '', category: 'Food' });
+      setExpense({ amount: '', description: '', category: 'Food' }); // Reset form if not editing
     }
   }, [currentExpense]);
 
   const handleChange = (e) => {
     setExpense({
       ...expense,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value, // Update form state when input changes
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentExpense) {
-      onUpdateExpense(currentExpense._id, expense);
+      onUpdateExpense(currentExpense._id, expense); // Call update function when editing
     } else {
-      onAddExpense(expense);
+      onAddExpense(expense); // Call add function when creating a new expense
     }
-    setExpense({ amount: '', description: '', category: 'Food' });
+    setExpense({ amount: '', description: '', category: 'Food' }); // Reset the form after submit
   };
 
   return (

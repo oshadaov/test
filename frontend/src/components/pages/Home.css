@@ -26,8 +26,8 @@
 }
 
 /* Left and Right Columns */
-.left, .right {
-  flex: 1;
+.left {
+ display: flex;
 }
 
 /* Right column adjustments for multiple graphs */
@@ -35,20 +35,7 @@
   margin-bottom: 20px;
 }
 
-/* Form, List, and Graph containers */
-.expense-form,
-.expense-list,
-.expense-graph,
-.expense-warning,
-.category-bar-graph {
-  background-color: #1b1f3b;;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .home-container {
     flex-direction: column;
