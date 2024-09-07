@@ -1,30 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 
-export default function NavBar() {
+import React from 'react';
+import './NavBar.css';
+import Logo from '../assests/chary-logo.png'
+function NavBar() {
   return (
-    <nav className="bg-gray-900 p-6">
-      <div className="container mx-auto">
-        <div className="flex justify-between">
-          <div className="text-white">
-            <Link to="/" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-3xl font-bold">Expense Tracker</Link>
-          </div>
-          <div>
-          <Link to="/HomePage" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-              HomePage
-            </Link>
-            <Link to="/DailyExpenses" className="text-gray-300 hover:text-white px-3 py-2 rounded-lg text-base font-medium">
-              Daily Expenses
-            </Link>
-            <Link to="/signup" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-              Sign Up
-            </Link>
-            <Link to="/signin" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-base font-medium">
-              Sign In
-            </Link>
-          </div>
-        </div>
+    <nav className="navbar">
+      <div className="logo">
+        <img src={Logo} alt="Meras Group Logo" />
       </div>
+      <ul className="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Log In</a></li>
+        <li><a href="#">Sign Up</a></li>
+      </ul>
     </nav>
   );
 }
+
+export default NavBar;

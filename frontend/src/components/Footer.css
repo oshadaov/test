@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #112d42;
+
+    align-items: center;
+  }
+  
+  .footer-logo {
+    width: 100px;
+  }
+  
+  .icon-button img {
+    width: 50px;
+  }
+  

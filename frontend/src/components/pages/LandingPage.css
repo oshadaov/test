@@ -1,10 +1,11 @@
-.Home {
+.LandingPageContainer {
     text-align: center;
-    background-color: #2a0002;
+    background-color: #1c3b50;
     color: white;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: 'Arial', sans-serif;
   }
   
