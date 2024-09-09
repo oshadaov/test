@@ -1,17 +1,15 @@
 import { useState } from "react";
 import Axios from "axios";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-
-Axios.defaults.withCredentials = true;
-
+  Axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,13 +23,22 @@ Axios.defaults.withCredentials = true;
         }
       })
       .catch((err) => {
-        if (err.response && err.response.status === 400) {
-            setError("User already exists!"); // Set error message when user exists
+        if (err.response) {
+          const statusCode = err.response.status;
+
+          if (statusCode === 400) {
+            setError("User is not registered!");  // Handle unregistered user
+          } else if (statusCode === 401) {
+            setError("Password is incorrect!");   // Handle incorrect password
           } else {
-            setError(err);
+            setError("An unknown error occurred!"); // Handle other errors
           }
+        } else {
+          setError("Server error! Please try again later.");
+        }
       });
   };
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -42,22 +49,14 @@ Axios.defaults.withCredentials = true;
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            action="#"
-            method="POST"
-            className="space-y-6"
-            onSubmit={handleSubmit}
-          >
-            {error && ( 
+          <form action="#" method="POST" className="space-y-6" onSubmit={handleSubmit}>
+            {error && (
               <div className="text-red-500 text-sm text-center">
                 {error}
               </div>
             )}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
               </label>
               <div className="mt-2">
@@ -75,20 +74,9 @@ Axios.defaults.withCredentials = true;
 
             <div>
               <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
+                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                   Password
                 </label>
-                <div className="text-sm">
-                  {/* <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a> */}
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -111,9 +99,16 @@ Axios.defaults.withCredentials = true;
                 Sign in
               </button>
             </div>
+            <div  className="font-semibold text-indigo-600 hover:text-indigo-500">
+           
+
+                  <Link to="/forgetpassword">             
+                    Forgot password?
+                    </Link>
+                  </div>
           </form>
           <p>
-            Have an Account? <Link to="/SignUp">Sign Up</Link>{" "}
+            Have an Account? <Link to="/SignUp">Sign Up</Link>
           </p>
         </div>
       </div>

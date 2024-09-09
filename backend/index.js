@@ -10,9 +10,9 @@ connectDB();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000',  // Allow only requests from this origin
-  methods: ['GET', 'POST'],          // Allow specific HTTP methods
-  credentials: true                  // Allow credentials (cookies, auth headers)
+  origin: 'http://localhost:3000',  
+  methods: ['GET', 'POST'],          
+  credentials: true                 
 }));
 app.use('/auth', UserRoutes);
 app.use('/users',UserRoutes)
