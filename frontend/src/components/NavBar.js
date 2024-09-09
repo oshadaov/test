@@ -2,6 +2,7 @@
 import React from 'react';
 import './NavBar.css';
 import Logo from '../assests/chary-logo.png'
+import { Link } from 'react-router-dom';
 function NavBar() {
   return (
     <nav className="navbar">
@@ -9,11 +10,12 @@ function NavBar() {
         <img src={Logo} alt="Meras Group Logo" />
       </div>
       <ul className="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Log In</a></li>
-        <li><a href="#">Sign Up</a></li>
+      <li><Link to='/home'>Home</Link></li>
+      <li><Link to='/home'>About</Link></li>
+      <li><Link to='/home'>Contact</Link></li>
+      <li><Link to='/login'>Log In</Link></li>
+      <li><Link to='/signup'>Sign Up</Link></li>
+       
       </ul>
     </nav>
   );
