@@ -66,44 +66,94 @@ router.post('/login', async (req, res) => {
     return res.status(200).json({ status: true, message: "Login successfully" });
 });
 
-router.post('/forgot-password',async(req,res) =>{
-    const {email} = req.body;
+
+
+
+router.post('/forgotPassword', async (req, res) => {
+    const { email } = req.body;
     try {
-        const user = await User.findOne({email})
-        if(!user){
-            return res.json({message : "user not registered"})
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.json({ message: "User not registered" });
+      }
+  
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: 'guji uhiy zvxa gzqp'
+        }
+      });
+  
+      var mailOptions = {
+        from: 'oshadaov@gmail.com',
+        to: email,
+        subject: 'Reset Password',
+        text: `http://localhost:5000/auth/resetPassword/${token}`
+      };
+  
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          return res.json({ message: "Error sending email" });
+        } else {
+          return res.json({ status: true, message: "Email sent" });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ message: "Internal server error" });
+    }
+  });
+
+// RESET PASSWORD (Update password after validation)
+router.post('/resetPassword/:token', async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { newPassword } = req.body;
+
+        if (!newPassword) {
+            return res.status(400).json({ message: 'New password is required' });
         }
 
+        // Verify the token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        const token = jwt.sign({id: user._id},process.env.JWT_SECRET,{expiresIn :'5m'})
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'oshadaov@gmail.com',
-              pass: 'nqrqtwclwzeesio'
-            }
-          });
-          
-          var mailOptions = {
-            from: 'oshadaov@gmail.com',
-            to: email,
-            subject: 'Reset Pasword',
-            text: `http://localhost:3000/forgetpassword/${token}`
-          };
-          
-          transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-             return res.json({ message : "error sending email "})
-            } else {
-                return res.json({status : true , message : "email sent"})
+        // Find the user by the decoded token's id
+        const user = await User.findById(decoded.id);
 
-            }
-          });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+        await user.save();
+
+        // Success message
+        res.status(200).json({ message: "Password updated successfully" });
     } catch (error) {
-    console.log(error);
-          
+        console.error("Password reset error:", error);
+        return res.status(400).json({ message: "Error updating password" });
     }
-})
+});
+ 
+router.get('/resetPassword/:token', async (req, res) => {
+    try {
+        const { token } = req.params;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);  // Verify token
 
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(400).json({ message: "Invalid or expired token" });
+        }
+
+        // Render a password reset form or return a success message
+        res.status(200).json({ message: "Token is valid. Proceed to reset password", userId: user._id });
+    } catch (error) {
+        return res.status(400).json({ message: "Invalid or expired token" });
+    }
+});
 
 module.exports = router

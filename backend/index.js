@@ -15,7 +15,8 @@ app.use(cors({
   credentials: true                 
 }));
 app.use('/auth', UserRoutes);
-app.use('/users',UserRoutes)
+app.use('/users',UserRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
