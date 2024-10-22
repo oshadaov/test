@@ -1,0 +1,13 @@
+/* src/GlitchHeader.css */
+.glitch-header {
+    margin-bottom: 30px;
+  }
+  
+  .glitch {
+    font-size: 3rem;
+    color: #00ff00;
+    text-transform: uppercase;
+    position: relative;
+    animation: glitch-animation 1.5s infinite;
+  }
+  

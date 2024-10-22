@@ -1,0 +1,21 @@
+/* src/CriticalErrorLogs.css */
+.error-logs {
+    background-color: #111;
+    padding: 20px;
+    border: 2px solid red;
+    margin: 20px 0;
+    color: red;
+  }
+  
+  .error-logs h3 {
+    margin-bottom: 10px;
+  }
+  
+  .error-logs ul {
+    list-style-type: none;
+  }
+  
+  .error-logs li {
+    margin: 5px 0;
+  }
+  

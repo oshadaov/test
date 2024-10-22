@@ -1,0 +1,37 @@
+/* src/HackedTerminal.css */
+.terminal {
+    background: black;
+    color: #00ff00;
+    font-size: 1.2rem;
+    padding: 20px;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+    width: 100%;
+    max-width: 800px;
+    overflow-y: auto;
+  }
+  
+  .glitch {
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.75);
+    animation: glitch-animation 1s infinite;
+  }
+  
+  @keyframes glitch-animation {
+    0% {
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.75), -3px 3px rgba(255, 0, 0, 0.75),
+        3px -3px rgba(0, 0, 255, 0.75);
+    }
+    25% {
+      text-shadow: -3px -3px rgba(255, 0, 0, 0.75),
+        3px 3px rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.75);
+    }
+    50% {
+      text-shadow: 3px -3px rgba(255, 0, 0, 0.75),
+        -3px 3px rgba(0, 0, 255, 0.75), 0 0 5px rgba(0, 255, 0, 0.75);
+    }
+    100% {
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.75), -3px 3px rgba(255, 0, 0, 0.75),
+        3px -3px rgba(0, 0, 255, 0.75);
+    }
+  }
+  

@@ -1,0 +1,35 @@
+/* src/UserInput.css */
+.user-input {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    border: 2px solid #00ff00;
+    padding: 10px;
+    box-shadow: 0 0 10px #00ff00;
+    background-color: black;
+  }
+  
+  .output {
+    color: #00ff00;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+  
+  .input-field {
+    width: 80%;
+    padding: 10px;
+    background-color: black;
+    color: #00ff00;
+    border: 2px solid #00ff00;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .submit-btn {
+    background-color: black;
+    color: #00ff00;
+    border: 2px solid #00ff00;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
